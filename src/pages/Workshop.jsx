@@ -9,11 +9,9 @@ export default function Workshop() {
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  // Fetch user data from Supabase
   useEffect(() => {
     const fetchData = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-
       if (!user) return;
 
       const { data: expenses } = await supabase.from('expenses').select('*').eq('user_id', user.id);
@@ -25,7 +23,6 @@ export default function Workshop() {
     fetchData();
   }, []);
 
-  // AI Request Function
   const handleAIRequest = async (userMessage) => {
     setIsLoading(true);
     try {
@@ -50,19 +47,15 @@ export default function Workshop() {
     if (!input.trim()) return;
 
     setMessages(prev => [...prev, { text: input, isUser: true, timestamp: new Date().toISOString() }]);
-
     const aiResponse = await handleAIRequest(input);
-
     setMessages(prev => [...prev, { text: aiResponse, isUser: false, timestamp: new Date().toISOString() }]);
-
     setInput('');
   };
 
   return (
-    <div className="workshop-container">
+    <div style={{ display: 'flex' }}>
       <Sidebar />
-
-      <div className="ai-chat-container">
+      <main className="ai-chat-container">
         <div className="chat-header">
           <h1>Sophia AI Assistant</h1>
           <p>Ask me about your finances</p>
@@ -96,8 +89,7 @@ export default function Workshop() {
             {isLoading ? 'Sending...' : 'Send'}
           </button>
         </form>
-      </div>
+      </main>
     </div>
   );
 }
-
