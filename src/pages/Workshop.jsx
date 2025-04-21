@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import Sidebar from '../Components/Sidebar';
+import Sidebar from '../tempComponents/Sidebar';
 import '../Styles/Workshop.css';
 
 export default function Workshop() {
