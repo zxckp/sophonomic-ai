@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "react-markdown": "^10.1.0"
+  }
+}
