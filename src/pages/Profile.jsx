@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../tempComponents/Sidebar';
+import Sidebar from '../Components/Sidebar';
 import '../Styles/Profile.css';
 
 const ESSENTIAL_CATEGORIES = [
