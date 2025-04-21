@@ -29,6 +29,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "typescript": "^5.8.3",
     "vite": "^6.3.2",
     "vite-plugin-checker": "^0.9.1"
   }
