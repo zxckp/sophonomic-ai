@@ -2,6 +2,9 @@ export default async function handler(req, res) {
   const { message, context } = req.body;
 
   try {
+    console.log("🚀 Received message:", message);
+    console.log("🔑 API Key present:", !!process.env.OPENAI_API_KEY);
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -9,7 +12,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4-1106-preview",
+        model: "gpt-4-1106-preview", // or use "gpt-4-turbo"
         messages: [
           {
             role: "system",
@@ -25,11 +28,11 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    res.status(200).json({
+    return res.status(200).json({
       response: data.choices?.[0]?.message?.content || "No response from AI."
     });
   } catch (err) {
-    console.error("OpenAI error:", err);
-    res.status(500).json({ response: "Something went wrong." });
+    console.error("❌ OpenAI error:", err);
+    return res.status(500).json({ response: "Something went wrong." });
   }
 }
