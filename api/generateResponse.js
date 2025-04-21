@@ -1,47 +1,35 @@
-import { useState } from 'react';
+export default async function handler(req, res) {
+  const { message, context } = req.body;
 
-export default function Workshop() {
-  const [userInput, setUserInput] = useState('');
-  const [aiResponse, setAiResponse] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-
-    const response = await fetch('https://YOUR-VERCEL-APP.vercel.app/api/generateResponse', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: userInput }),
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4-1106-preview",
+        messages: [
+          {
+            role: "system",
+            content: "You are Sophia, a friendly budgeting assistant. Respond kindly and clearly. If context is given, personalize your answers.",
+          },
+          {
+            role: "user",
+            content: `User Message: ${message}\n\nUser Context: ${JSON.stringify(context, null, 2)}`
+          }
+        ],
+      }),
     });
 
     const data = await response.json();
-    const message = data.choices?.[0]?.message?.content;
 
-    setAiResponse(message);
-    setLoading(false);
+    res.status(200).json({
+      response: data.choices?.[0]?.message?.content || "No response from AI."
+    });
+  } catch (err) {
+    console.error("OpenAI error:", err);
+    res.status(500).json({ response: "Something went wrong." });
   }
-
-  return (
-    <div>
-      <h1>Talk to Sophia</h1>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          placeholder="Ask a budgeting question..."
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Thinking...' : 'Submit'}
-        </button>
-      </form>
-
-      {aiResponse && (
-        <div>
-          <h2>Sophia says:</h2>
-          <p>{aiResponse}</p>
-        </div>
-      )}
-    </div>
-  );
 }

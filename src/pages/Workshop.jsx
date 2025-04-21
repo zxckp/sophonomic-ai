@@ -13,30 +13,26 @@ export default function Workshop() {
   useEffect(() => {
     const fetchData = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
+      if (!user) return;
+
       const { data: expenses } = await supabase.from('expenses').select('*').eq('user_id', user.id);
       const { data: goals } = await supabase.from('goals').select('*').eq('user_id', user.id);
       const { data: profile } = await supabase.from('profiles').select('*').eq('user_id', user.id).single();
-      
+
       setUserData({ expenses, goals, profile });
     };
     fetchData();
   }, []);
 
-  // AI Integration
+  // AI Request Function
   const handleAIRequest = async (userMessage) => {
     setIsLoading(true);
     try {
-      // Replace with your actual API endpoint
-      const response = await fetch('YOUR_AI_API_ENDPOINT', {
+      const response = await fetch('/api/generateResponse', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          context: userData
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, context: userData })
       });
 
       const data = await response.json();
@@ -53,22 +49,11 @@ export default function Workshop() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // Add user message
-    setMessages(prev => [...prev, { 
-      text: input, 
-      isUser: true, 
-      timestamp: new Date().toISOString() 
-    }]);
+    setMessages(prev => [...prev, { text: input, isUser: true, timestamp: new Date().toISOString() }]);
 
-    // Get AI response
     const aiResponse = await handleAIRequest(input);
-    
-    // Add AI response
-    setMessages(prev => [...prev, { 
-      text: aiResponse, 
-      isUser: false, 
-      timestamp: new Date().toISOString() 
-    }]);
+
+    setMessages(prev => [...prev, { text: aiResponse, isUser: false, timestamp: new Date().toISOString() }]);
 
     setInput('');
   };
@@ -76,7 +61,7 @@ export default function Workshop() {
   return (
     <div className="workshop-container">
       <Sidebar />
-      
+
       <div className="ai-chat-container">
         <div className="chat-header">
           <h1>Sophia AI Assistant</h1>
@@ -88,17 +73,13 @@ export default function Workshop() {
             <div key={index} className={`message ${msg.isUser ? 'user' : 'ai'}`}>
               <div className="message-content">
                 {msg.text}
-                <div className="timestamp">
-                  {new Date(msg.timestamp).toLocaleTimeString()}
-                </div>
+                <div className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</div>
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="message ai loading">
-              <div className="message-content">
-                Sophia is thinking...
-              </div>
+              <div className="message-content">Sophia is thinking...</div>
             </div>
           )}
         </div>
