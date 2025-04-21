@@ -1,0 +1,66 @@
+/* Saving.css additions */
+.month-picker {
+    padding: 0.8rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .category-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .input-group {
+    margin: 1.2rem 0;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .difference-display {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .under-budget { color: #48bb78; }
+  .over-budget { color: #f56565; }
+  
+  .empty-state {
+    text-align: center;
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 0.8rem;
+    margin: 2rem 0;
+  }
+  
+  .status-message {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .status-message.success {
+    background: #48bb7820;
+    color: #48bb78;
+  }
+  
+  .status-message.error {
+    background: #f5656520;
+    color: #f56565;
+  }
