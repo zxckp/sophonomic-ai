@@ -1,8 +1,12 @@
 {
   "dependencies": {
+    "@types/react": "^19.1.2",
     "cors": "^2.8.5",
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.1.0",
-    "react-markdown": "^10.1.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "vite": "^6.3.2"
   }
 }
