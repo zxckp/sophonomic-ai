@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import '../Styles/Sidebar.css'; // Correct CSS import path
+import '../Styles/Sidebar.css'; // Make sure this file exists!
 
 export default function Sidebar() {
   return (
@@ -14,7 +14,7 @@ export default function Sidebar() {
         <Link to="/workshop" className="nav-item">
           🧠 Financial Workshop
         </Link>
-        <Link to="/profile" className="nav-item active">
+        <Link to="/profile" className="nav-item">
           ⚙️ Profile & Settings
         </Link>
       </nav>

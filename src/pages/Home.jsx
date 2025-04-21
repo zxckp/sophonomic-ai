@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { Doughnut, Line } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 import { supabase } from '../supabaseClient';
-import Sidebar from '../Components/Sidebar';
+import Sidebar from '../components/Sidebar';
 import '../Styles/Home.css';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+
 
 // Import logos (store these in public/images folder)
 const subscriptionLogos = {
