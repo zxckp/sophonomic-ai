@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4-1106-preview", // or use "gpt-4-turbo"
+        model: "gpt-4-1106-preview",
         messages: [
           {
             role: "system",
@@ -23,13 +23,18 @@ export default async function handler(req, res) {
             content: `User Message: ${message}\n\nUser Context: ${JSON.stringify(context, null, 2)}`
           }
         ],
+        temperature: 0.7,
       }),
     });
 
     const data = await response.json();
 
+    console.log("🧠 Raw OpenAI Response:", JSON.stringify(data, null, 2));
+
+    const aiMessage = data?.choices?.[0]?.message?.content;
+
     return res.status(200).json({
-      response: data.choices?.[0]?.message?.content || "No response from AI."
+      response: aiMessage || "No response from AI. Debug output: " + JSON.stringify(data)
     });
   } catch (err) {
     console.error("❌ OpenAI error:", err);
